@@ -1,0 +1,8 @@
+[package]
+name = "blurred-background"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bokeh = "0.1.0"
+image = "0.24"
