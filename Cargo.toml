@@ -7,3 +7,5 @@ edition = "2024"
 bokeh = "0.1.0"
 clap = { version = "4.5.51", features = ["derive"] }
 image = "0.24"
+tracing = "0.1.41"
+tracing-subscriber = "0.3.20"
