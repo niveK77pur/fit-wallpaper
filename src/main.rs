@@ -1,7 +1,10 @@
 use clap::Parser;
 
 use bokeh::{Blur, params::KERNEL9_PARAM_SET};
-use image::{DynamicImage, GenericImageView, imageops::FilterType, io::Reader as ImageReader};
+use image::{
+    DynamicImage, GenericImageView, GrayAlphaImage, LumaA, imageops::FilterType,
+    io::Reader as ImageReader,
+};
 use tracing::{Level, error, info};
 use tracing_subscriber::FmtSubscriber;
 
@@ -62,6 +65,13 @@ fn main() {
 
     info!(args.radius, "Blurring background");
     background.bokeh_blur(args.radius, &KERNEL9_PARAM_SET, 3.0);
+    info!("Overlaying white color for a milk glass look");
+    let mut white = GrayAlphaImage::new(background.width(), background.height());
+    white
+        .pixels_mut()
+        .for_each(|p| *p = LumaA::<u8>::from([255, 20]));
+    let white = DynamicImage::ImageLumaA8(white).into_rgba8();
+    image::imageops::overlay(&mut background, &white, 0, 0);
 
     info!("Overlay image in the center");
     let background_size = background.dimensions();
