@@ -291,6 +291,7 @@ dependencies = [
  "num-traits",
  "png",
  "qoi",
+ "rayon",
  "tiff",
 ]
 
